@@ -2,7 +2,9 @@ package com.example.news_project.data.news;
 
 import com.example.news_project.data.NewsDatabase;
 import com.example.news_project.data.filter.FilterEntity;
+import com.example.news_project.data.mapper.DataFilterToDomainMapper;
 import com.example.news_project.data.mapper.DataNewsToDomainMapper;
+import com.example.news_project.data.mapper.IMapper;
 import com.example.news_project.data.news.Api.NewsApiRepository;
 import com.example.news_project.domain.INewsRepository;
 import com.example.news_project.domain.enities.News;
@@ -16,20 +18,18 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Flowable;
 
-public class INewsRepositoryImpl implements INewsRepository {
+public class NewsRepositoryImpl implements INewsRepository {
 
     private NewsDatabase database;
     private final NewsApiRepository apiRepository;
-    private final DataNewsToDomainMapper mapper;
+    private final DataNewsToDomainMapper mapper = new DataNewsToDomainMapper();
 
     @Inject
-    INewsRepositoryImpl(
+    NewsRepositoryImpl(
             @NotNull NewsDatabase database,
-            @NotNull NewsApiRepository apiRepository,
-            @NotNull DataNewsToDomainMapper mapper) {
+            @NotNull NewsApiRepository apiRepository) {
         this.database = database;
         this.apiRepository = apiRepository;
-        this.mapper = mapper;
         filters.forEach(filterEntities -> filterEntities.forEach(filterEntity -> loadNews(filterEntity.name)));
     }
 

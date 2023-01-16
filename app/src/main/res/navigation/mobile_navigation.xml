@@ -25,15 +25,18 @@
     <fragment
         android:id="@+id/filtersFragment"
         android:name="com.example.news_project.ui.filters.filtersList.FiltersFragment"
-        android:label="FiltersFragment" >
+        android:label="FiltersFragment">
         <action
             android:id="@+id/action_filtersFragment_to_filtersRedactorFragment"
             app:destination="@id/filtersFragment" />
+        <action
+            android:id="@+id/action_filtersFragment_to_filtersRedactorFragment2"
+            app:destination="@id/filtersRedactorFragment" />
     </fragment>
     <fragment
         android:id="@+id/filtersRedactorFragment"
         android:name="com.example.news_project.ui.filters.filterRedactor.FiltersRedactorFragment"
-        android:label="FiltersRedactorFragment" >
+        android:label="FiltersRedactorFragment">
         <action
             android:id="@+id/action_filtersRedactorFragment_to_filtersFragment"
             app:destination="@id/filtersFragment" />

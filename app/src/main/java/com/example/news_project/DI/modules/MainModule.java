@@ -1,28 +1,22 @@
-package com.example.news_project.DI;
+package com.example.news_project.DI.modules;
 
 
 import android.content.Context;
 
-import androidx.room.Database;
 import androidx.room.Room;
 
 import com.example.news_project.data.NewsDatabase;
 import com.example.news_project.data.news.Api.NewsApiService;
-import com.example.news_project.data.news.INewsRepositoryImpl;
-import com.example.news_project.domain.INewsRepository;
 
 import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
-import dagger.Reusable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Scheduler;
 import rx.schedulers.Schedulers;
 
 @Module

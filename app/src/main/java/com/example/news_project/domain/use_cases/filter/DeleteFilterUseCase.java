@@ -10,7 +10,7 @@ public class DeleteFilterUseCase {
     private final IFilterRepository repository;
 
     @Inject
-    DeleteFilterUseCase(IFilterRepository repository){
+    public DeleteFilterUseCase(IFilterRepository repository){
         this.repository = repository;
     }
 

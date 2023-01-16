@@ -1,4 +1,4 @@
-package com.example.news_project.ui.filters;
+package com.example.news_project.ui;
 
 public class Codes {
 
@@ -9,5 +9,7 @@ public class Codes {
     public final static int ADD_FILTER = 0;
 
     public final static int CHANGE_FILTER = 1;
+
+    public final static String URL_KEY = "url_key";
 
 }

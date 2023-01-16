@@ -11,13 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.news_project.R;
 import com.example.news_project.databinding.FilterRedactorFragmentBinding;
 import com.example.news_project.domain.enities.Filter;
-import com.example.news_project.ui.filters.Codes;
+import com.example.news_project.ui.Codes;
 
 import javax.inject.Inject;
 

@@ -10,7 +10,7 @@ public class AddFilterUseCase {
     private final IFilterRepository repository;
 
     @Inject
-    AddFilterUseCase(IFilterRepository repository){
+    public AddFilterUseCase(IFilterRepository repository){
         this.repository = repository;
     }
 

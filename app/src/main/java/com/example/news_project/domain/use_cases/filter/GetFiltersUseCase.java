@@ -14,7 +14,7 @@ public class GetFiltersUseCase {
     private final IFilterRepository repository;
 
     @Inject
-    GetFiltersUseCase(IFilterRepository repository){
+    public GetFiltersUseCase(IFilterRepository repository){
         this.repository = repository;
     }
 

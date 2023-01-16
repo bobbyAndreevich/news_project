@@ -14,7 +14,7 @@ public class GetNewsUseCase {
     private final INewsRepository repository;
 
     @Inject
-    GetNewsUseCase(INewsRepository repository){
+    public GetNewsUseCase(INewsRepository repository){
         this.repository = repository;
     }
 

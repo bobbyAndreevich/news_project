@@ -25,8 +25,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Consumer<News> onNewsClick;
 
-    private Consumer<News> onNewsDate;
-
     private List<News> news = new ArrayList<>();
 
     private NewsItemBinding newsItemBinding;
@@ -57,7 +55,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(click -> onNewsClick.accept(news.get(getAdapterPosition())));
-            onNewsDate.accept(news.get(getAdapterPosition()));
+            onNewsClick.accept(news.get(getAdapterPosition()));
         }
 
         public void bind(News news) {

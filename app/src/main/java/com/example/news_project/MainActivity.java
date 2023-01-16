@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
+import com.example.news_project.ui.filters.filtersList.FiltersFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.fragmentContainerView, FiltersFragment.class, null)
+                .commit();
         setContentView(binding.getRoot());
     }
 }

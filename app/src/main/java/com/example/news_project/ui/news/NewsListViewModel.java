@@ -1,6 +1,11 @@
 package com.example.news_project.ui.news;
 
+import android.widget.Filterable;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -20,14 +25,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class NewsListViewModel extends ViewModel {
+public class NewsListViewModel extends ViewModel implements LifecycleOwner{
 
-    private MutableLiveData<List<News>> mutableNews = new MutableLiveData<>();
-    private MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
+    private final MutableLiveData<List<News>> mutableNews = new MutableLiveData<>();
+    private final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
 
-    public NewsListAdapter adapter;
-
-    private LifecycleOwner owner;
+    public NewsListAdapter adapter = new NewsListAdapter();
 
     public MutableLiveData<Integer> selectedFilter = new MutableLiveData<>(0);
     private List<News> notFilteredNews = new ArrayList<>();
@@ -41,12 +44,7 @@ public class NewsListViewModel extends ViewModel {
         this.getFiltersUseCase = getFiltersUseCase;
         this.getNewsUseCase = getNewsUseCase;
         loadData();
-        adapter = new NewsListAdapter();
-        mutableNews.observe(owner, news -> adapter.setChanged(news));
-    }
-
-    public void attach(LifecycleOwner fragment) {
-        owner = fragment;
+        mutableNews.observe(this, news -> adapter.setChanged(news));
     }
 
     private void loadData() {
@@ -72,15 +70,26 @@ public class NewsListViewModel extends ViewModel {
 
     private void observeNews(List<News> news) {
         Comparator<News> comparator = Comparator.comparing(News::getDateValue);
-        if (0 == selectedFilter.getValue()) {
-            mutableNews.setValue(news.stream().sorted(comparator).collect(Collectors.toList()));
-            notFilteredNews = mutableNews.getValue();
-        } else {
+        if (0 != selectedFilter.getValue()) {
             notFilteredNews = news.stream().sorted(comparator).collect(Collectors.toList());
             mutableNews.setValue(notFilteredNews.stream()
                     .filter(it -> it.filter.equals(mutableFilters.getValue()
                             .get(selectedFilter.getValue() - 1).name)).collect(Collectors.toList()));
+        } else {
+            mutableNews.setValue(news.stream().sorted(comparator).collect(Collectors.toList()));
+            notFilteredNews = mutableNews.getValue();
         }
     }
 
+    @Override
+    protected void onCleared() {
+        disposable.clear();
+        super.onCleared();
+    }
+
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return new LifecycleRegistry(this);
+    }
 }

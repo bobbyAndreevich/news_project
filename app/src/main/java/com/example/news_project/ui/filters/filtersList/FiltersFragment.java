@@ -9,23 +9,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.news_project.DI.DaggerApp;
+import com.example.news_project.DI.DaggerViewModelFactory;
 import com.example.news_project.R;
 import com.example.news_project.databinding.FiltersFragmentBinding;
 import com.example.news_project.domain.enities.Filter;
-import com.example.news_project.ui.filters.Codes;
-import com.example.news_project.ui.filters.filtersList.FiltersViewModel;
+import com.example.news_project.ui.Codes;
 
 import javax.inject.Inject;
 
 public class FiltersFragment extends Fragment {
 
-    final FiltersViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext())
-            .get(FiltersViewModel.class);
+    @Inject
+    DaggerViewModelFactory viewModelFactory;
+
+    public FiltersViewModel viewModel;
 
     private NavController navController;
 
@@ -35,10 +36,14 @@ public class FiltersFragment extends Fragment {
         super(R.layout.filters_fragment);
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        ((DaggerApp) requireActivity().getApplicationContext()).component.inject(this);
+        viewModel = new ViewModelProvider(this, viewModelFactory).get(FiltersViewModel.class);
         binding = FiltersFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -50,7 +55,6 @@ public class FiltersFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         viewModel.init();
         initAdapter();
-
     }
 
     private void createFilter(){

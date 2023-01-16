@@ -12,21 +12,17 @@ import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Flowable;
 
-public class IFilterRepositoryImpl implements IFilterRepository {
+public class FilterRepositoryImpl implements IFilterRepository {
 
     private  NewsDatabase database;
-    private final DomainFilterToDataMapper toDataMapper;
-    private final DataFilterToDomainMapper toDomainMapper;
+    private final DomainFilterToDataMapper toDataMapper = new DomainFilterToDataMapper();
+    private final DataFilterToDomainMapper toDomainMapper = new DataFilterToDomainMapper();
 
 
     @Inject
-    IFilterRepositoryImpl(
-            NewsDatabase database,
-            DomainFilterToDataMapper toDataMapper,
-            DataFilterToDomainMapper toDomainMapper){
+    FilterRepositoryImpl(
+            NewsDatabase database){
         this.database = database;
-        this.toDataMapper = toDataMapper;
-        this.toDomainMapper = toDomainMapper;
     }
 
     private final Flowable<List<FilterEntity>> filters = database.dataBaseDao().getFilters();
