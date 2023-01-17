@@ -36,9 +36,8 @@ public class FiltersViewModel extends ViewModel implements LifecycleOwner {
         this.deleteFilterUseCase = deleteFilterUseCase;
     }
 
-    public void init(){
+    public void init() {
         loadFilters();
-        mutableFilters.observe(this, filters -> adapter.setChanged(filters));
     }
 
     private void loadFilters() {
@@ -46,16 +45,17 @@ public class FiltersViewModel extends ViewModel implements LifecycleOwner {
                 .execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mutableFilters::setValue));
+                .subscribe(filters -> adapter.submitList(filters)));
     }
 
-    public LiveData<List<Filter>> getFilters(){
+    public LiveData<List<Filter>> getFilters() {
         return mutableFilters;
     }
 
-    public void deleteFilter(Filter filter){
-        Completable.fromAction(() -> deleteFilterUseCase.execute(filter)).
-                subscribeOn(Schedulers.io());
+    public void deleteFilter(Filter filter) {
+        Completable.fromAction(() -> deleteFilterUseCase.execute(filter))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override

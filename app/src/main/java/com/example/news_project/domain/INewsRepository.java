@@ -11,4 +11,5 @@ public interface INewsRepository {
 
     Flowable<List<News>> getNews();
 
+
 }

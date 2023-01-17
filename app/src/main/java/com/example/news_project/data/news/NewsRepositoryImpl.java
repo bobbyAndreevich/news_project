@@ -20,14 +20,16 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public class NewsRepositoryImpl implements INewsRepository {
 
-    private NewsDatabase database;
+    private  NewsDatabase database;
     private final NewsApiRepository apiRepository;
-    private final DataNewsToDomainMapper mapper = new DataNewsToDomainMapper();
+    private final DataNewsToDomainMapper mapper;
 
     @Inject
-    NewsRepositoryImpl(
-            @NotNull NewsDatabase database,
-            @NotNull NewsApiRepository apiRepository) {
+    public NewsRepositoryImpl(
+            DataNewsToDomainMapper mapper,
+            NewsDatabase database,
+            NewsApiRepository apiRepository) {
+        this.mapper = mapper;
         this.database = database;
         this.apiRepository = apiRepository;
         filters.forEach(filterEntities -> filterEntities.forEach(filterEntity -> loadNews(filterEntity.name)));

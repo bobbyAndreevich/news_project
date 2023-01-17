@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DataNewsToDomainMapper implements IMapper<List<NewsEntity>, List<News>>{
+import javax.inject.Inject;
 
+public class DataNewsToDomainMapper implements IMapper<List<NewsEntity>, List<News>> {
+
+    @Inject
+    public DataNewsToDomainMapper() {
+    }
 
     private News singleMap(NewsEntity value) {
         News news = new News();

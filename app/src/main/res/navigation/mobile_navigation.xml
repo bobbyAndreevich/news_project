@@ -3,42 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/filtersFragment">
-
+    app:startDestination="@id/filtersFragment2">
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.news_project.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.news_project.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.news_project.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/filtersFragment"
+        android:id="@+id/filtersFragment2"
         android:name="com.example.news_project.ui.filters.filtersList.FiltersFragment"
-        android:label="FiltersFragment">
+        android:label="fragment_filters"
+        tools:layout="@layout/fragment_filters" >
         <action
-            android:id="@+id/action_filtersFragment_to_filtersRedactorFragment"
-            app:destination="@id/filtersFragment" />
-        <action
-            android:id="@+id/action_filtersFragment_to_filtersRedactorFragment2"
-            app:destination="@id/filtersRedactorFragment" />
+            android:id="@+id/action_filtersFragment2_to_filterRedactorFragment"
+            app:destination="@id/filterRedactorFragment" />
     </fragment>
     <fragment
-        android:id="@+id/filtersRedactorFragment"
-        android:name="com.example.news_project.ui.filters.filterRedactor.FiltersRedactorFragment"
-        android:label="FiltersRedactorFragment">
+        android:id="@+id/filterRedactorFragment"
+        android:name="com.example.news_project.ui.filters.filterRedactor.FilterRedactorFragment"
+        android:label="fragment_filter_redactor"
+        tools:layout="@layout/fragment_filter_redactor" >
         <action
-            android:id="@+id/action_filtersRedactorFragment_to_filtersFragment"
-            app:destination="@id/filtersFragment" />
+            android:id="@+id/action_filterRedactorFragment_to_filtersFragment2"
+            app:destination="@id/filtersFragment2" />
     </fragment>
 </navigation>

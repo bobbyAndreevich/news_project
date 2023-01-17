@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.news_project.databinding.FilterItemBinding;
 import com.example.news_project.domain.enities.Filter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.FilterViewHolder> {
 
     private Consumer<Filter> onItemClick;
 
-    private List<Filter> filters = new ArrayList<Filter>();
+    private Predicate<Filter> onLongPress;
+
     private FilterItemBinding binding;
+
 
     public FiltersListAdapter() {
         super(new DiffCallback());
@@ -31,8 +32,8 @@ public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.F
         this.onItemClick = action;
     }
 
-    public void setChanged(List<Filter> filters) {
-        this.filters = filters;
+    public void setOnLongPress(Predicate<Filter> action) {
+        this.onLongPress = action;
     }
 
     @NonNull
@@ -44,19 +45,7 @@ public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.F
 
     @Override
     public void onBindViewHolder(@NonNull FilterViewHolder holder, int position) {
-        holder.bind(filters.get(position));
-    }
-
-    public class FilterViewHolder extends RecyclerView.ViewHolder {
-        public FilterViewHolder(@NonNull View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(click -> onItemClick.accept(filters.get(getAdapterPosition())));
-
-        }
-
-        public void bind(Filter filter) {
-            binding.filterName.setText(filter.name);
-        }
+        holder.bind(getItem(position));
     }
 
     private static class DiffCallback extends DiffUtil.ItemCallback<Filter> {
@@ -69,6 +58,18 @@ public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.F
         @Override
         public boolean areContentsTheSame(@NonNull Filter oldItem, @NonNull Filter newItem) {
             return oldItem.description.equals(newItem.description) && oldItem.name.equals(newItem.name);
+        }
+    }
+
+    public class FilterViewHolder extends RecyclerView.ViewHolder {
+        public FilterViewHolder(@NonNull View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(click -> onItemClick.accept(getItem(getAdapterPosition())));
+            itemView.setOnLongClickListener(press -> onLongPress.test(getItem(getAdapterPosition())));
+        }
+
+        public void bind(Filter filter) {
+            binding.filterName.setText(filter.name);
         }
     }
 

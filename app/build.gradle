@@ -37,6 +37,7 @@ android {
 dependencies {
 
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.7.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def glide_version = "4.14.2"
     def lifecycle_version = "2.5.1"
     def rxJava_version = "3.1.5"
@@ -60,6 +61,7 @@ dependencies {
     //OkHttp
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttp_version"
     //Rx
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation "io.reactivex.rxjava3:rxjava:$rxJava_version"
     implementation "android.arch.lifecycle:reactivestreams:1.1.1"
@@ -69,7 +71,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     //Room
-    implementation "androidx.room:room-common:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation"androidx.room:room-rxjava3:$room_version"

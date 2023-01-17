@@ -10,7 +10,7 @@ public class NewsApiRepository {
     private final NewsApiService newsApiService;
 
     @Inject
-    NewsApiRepository(NewsApiService newsApiService){
+    public NewsApiRepository(NewsApiService newsApiService){
         this.newsApiService = newsApiService;
     }
 

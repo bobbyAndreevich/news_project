@@ -1,23 +1,29 @@
 package com.example.news_project.DI;
 
 
-
-import com.example.news_project.DI.modules.AppModule;
-import com.example.news_project.DI.modules.MainModule;
-import com.example.news_project.DI.modules.UseCasesModule;
-import com.example.news_project.DI.modules.ViewModelModule;
+import com.example.news_project.DI.modules.ContextModule;
+import com.example.news_project.DI.modules.DataModule;
+import com.example.news_project.DI.modules.FilterModule;
+import com.example.news_project.DI.modules.NewsModule;
+import com.example.news_project.ui.filters.filterRedactor.FilterRedactorFragment;
+import com.example.news_project.ui.filters.filtersList.DeleteFilterDialogFragment;
 import com.example.news_project.ui.filters.filtersList.FiltersFragment;
-import com.example.news_project.ui.filters.filtersList.FiltersViewModel;
-import com.example.news_project.ui.news.NewsListViewModel;
+import com.example.news_project.ui.news.NewsListFragment;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import dagger.Provides;
 
 @Singleton
-@Component(modules = {AppModule.class, MainModule.class, ViewModelModule.class, UseCasesModule.class})
-public interface ApplicationComponent{
+@Component(modules = {ContextModule.class, DataModule.class, FilterModule.class, NewsModule.class})
+public interface ApplicationComponent {
+
+    void inject(DeleteFilterDialogFragment fragment);
 
     void inject(FiltersFragment fragment);
+
+    void inject(FilterRedactorFragment fragment);
+
+    void inject(NewsListFragment fragment);
+
 }
