@@ -29,7 +29,7 @@
         android:id="@+id/cardView"
         android:layout_width="4dp"
         android:layout_height="32dp"
-        app:cardBackgroundColor="@color/filters_button_color"
+        app:cardBackgroundColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="4dp"
-        app:cardBackgroundColor="@color/filters_button_color"
+        app:cardBackgroundColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

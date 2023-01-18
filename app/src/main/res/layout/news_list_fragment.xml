@@ -9,26 +9,12 @@
         android:id="@+id/news_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
         android:background="#F5F5F5"
-        app:layout_anchor="@id/bottom_sheet_cont"
-        app:layout_anchorGravity="top"/>
-
-    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/bottom_sheet_cont"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="50dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+        app:layout_anchorGravity="top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/no_news_text"

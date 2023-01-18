@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -28,16 +29,17 @@ public class FiltersFragment extends Fragment {
 
     private FragmentFiltersBinding binding;
 
+    private NavController navController;
+
     public FiltersFragment(){
         super(R.layout.fragment_filters);
     }
-
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
         ((DaggerApp) requireActivity().getApplication()).getAppComponent().inject(this);
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -54,18 +56,14 @@ public class FiltersFragment extends Fragment {
     private void createFilter(){
         Bundle bundle = new Bundle();
         bundle.putInt(Codes.REQUEST_CODE, Codes.ADD_FILTER);
-        NavHostFragment.
-                findNavController(this)
-                .navigate(R.id.action_filtersFragment2_to_filterRedactorFragment, bundle);
+        navController.navigate(R.id.action_filtersFragment2_to_filterRedactorFragment, bundle);
     }
 
     private void editFilter(Filter filter){
         Bundle bundle = new Bundle();
         bundle.putInt(Codes.REQUEST_CODE, Codes.CHANGE_FILTER);
         bundle.putSerializable(Codes.FILTER_KEY, filter);
-        NavHostFragment
-                .findNavController(this)
-                .navigate(R.id.action_filtersFragment2_to_filterRedactorFragment, bundle);
+        navController.navigate(R.id.action_filtersFragment2_to_filterRedactorFragment, bundle);
     }
 
     private void deleteFilter(Filter filter){
@@ -75,7 +73,7 @@ public class FiltersFragment extends Fragment {
     private boolean suggestDeleteFilter(Filter filter){
         Bundle bundle = new Bundle();
         bundle.putSerializable(Codes.FILTER_KEY, filter);
-        DialogFragment dialogFragment = new DeleteFilterDialogFragment();
+        DeleteFilterDialogFragment dialogFragment = new DeleteFilterDialogFragment(this::deleteFilter);
         dialogFragment.setArguments(bundle);
         dialogFragment.show(
                 getChildFragmentManager(),

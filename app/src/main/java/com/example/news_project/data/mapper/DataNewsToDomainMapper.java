@@ -22,7 +22,8 @@ public class DataNewsToDomainMapper implements IMapper<List<NewsEntity>, List<Ne
         news.filter = value.filter;
         news.author = value.author;
         news.description = value.description;
-        news.publishedDate = value.publishedAt.substring(0, 9);
+        news.publishedDate = value.publishedAt.substring(0, 10);
+        news.imageUrl = value.imageUrl;
         return news;
     }
 

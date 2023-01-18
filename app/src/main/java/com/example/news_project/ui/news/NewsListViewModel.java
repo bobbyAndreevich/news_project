@@ -27,8 +27,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NewsListViewModel extends ViewModel implements LifecycleOwner{
 
-    private final MutableLiveData<List<News>> mutableNews = new MutableLiveData<>();
-    private final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
+    public final MutableLiveData<List<News>> mutableNews = new MutableLiveData<>();
+    public final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
 
     public NewsListAdapter adapter = new NewsListAdapter();
 
@@ -44,7 +44,6 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner{
         this.getFiltersUseCase = getFiltersUseCase;
         this.getNewsUseCase = getNewsUseCase;
         loadData();
-        mutableNews.observe(this, news -> adapter.setChanged(news));
     }
 
     private void loadData() {

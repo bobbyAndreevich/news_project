@@ -18,17 +18,8 @@ import dagger.Reusable;
 @Module
 public abstract class NewsModule {
 
-//    @Provides
-//    public GetNewsUseCase provideNewsUseCase(INewsRepository repository){
-//        return new GetNewsUseCase(repository);
-//    }
-
     @Binds
     @Reusable
     public abstract INewsRepository provideNewsRepository(NewsRepositoryImpl impl);
 
-//    @Provides
-//    public NewsApiRepository provideNewsApiRepository(NewsApiService service){
-//        return new NewsApiRepository(service);
-//    }
 }

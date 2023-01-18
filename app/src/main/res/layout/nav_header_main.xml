@@ -25,5 +25,5 @@
         android:background="#2E2B2B"
         android:backgroundTint="#2E2B2B"
         android:text="@string/create_filter"
-        app:backgroundTint="@color/filters_button_color" />
+        app:backgroundTint="@color/grey" />
 </LinearLayout>

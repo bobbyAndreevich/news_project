@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/filtersFragment2">
+    app:startDestination="@id/newsFragment">
     <fragment
         android:id="@+id/filtersFragment2"
         android:name="com.example.news_project.ui.filters.filtersList.FiltersFragment"
@@ -20,6 +20,15 @@
         tools:layout="@layout/fragment_filter_redactor" >
         <action
             android:id="@+id/action_filterRedactorFragment_to_filtersFragment2"
+            app:destination="@id/filtersFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.news_project.ui.news.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_newsFragment_to_filtersFragment2"
             app:destination="@id/filtersFragment2" />
     </fragment>
 </navigation>

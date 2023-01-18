@@ -23,7 +23,7 @@ public interface DataBaseDao {
     @Query("SELECT * FROM Filters")
     Flowable<List<FilterEntity>> getFilters();
 
-    @Insert(onConflict = OnConflictStrategy.ROLLBACK)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFiler(FilterEntity filter);
 
     @Update
@@ -38,7 +38,7 @@ public interface DataBaseDao {
     @Query("SELECT * FROM News")
     Flowable<List<NewsEntity>> getNews();
 
-    @Insert(onConflict = OnConflictStrategy.ROLLBACK)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNews(NewsEntity news);
 
     @Delete

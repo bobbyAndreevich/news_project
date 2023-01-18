@@ -34,7 +34,7 @@ public class WebViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String newsUrl = getArguments().getString(Codes.URL_KEY);
+        String newsUrl = requireArguments().getString(Codes.URL_KEY);
         binding.wevView.getSettings().setJavaScriptEnabled(true);
         binding.wevView.loadUrl(newsUrl);
     }

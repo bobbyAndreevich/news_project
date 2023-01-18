@@ -22,6 +22,6 @@ public class News{
 
     public int getDateValue(){
         int[] values = Arrays.stream(publishedDate.split("-")).mapToInt(Integer::parseInt).toArray();
-        return values[0] * 365 + values[1] * 30 + values[2];
+        return values[0] * -365 + values[1] * -30 - values[2];
     }
 }

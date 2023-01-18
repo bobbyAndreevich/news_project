@@ -14,7 +14,6 @@ import com.example.news_project.ui.filters.filtersList.FiltersFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
     @Override

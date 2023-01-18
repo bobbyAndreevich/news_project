@@ -19,26 +19,6 @@ import dagger.Reusable;
 @Module
 public abstract class FilterModule {
 
-//    @Provides
-//    public GetFiltersUseCase provideGetFiltersUseCase(IFilterRepository repository) {
-//        return new GetFiltersUseCase(repository);
-//    }
-//
-//    @Provides
-//    public UpdateFilterUseCase provideUpdateFilterUseCase(IFilterRepository repository) {
-//        return new UpdateFilterUseCase(repository);
-//    }
-//
-//    @Provides
-//    public DeleteFilterUseCase provideDeleteFilterUseCase(IFilterRepository repository) {
-//        return new DeleteFilterUseCase(repository);
-//    }
-//
-//    @Provides
-//    public AddFilterUseCase provideAddFilterUseCase(IFilterRepository repository) {
-//        return new AddFilterUseCase(repository);
-//    }
-
     @Binds
     @Reusable
     public abstract IFilterRepository provideFilterRepository(FilterRepositoryImpl impl);

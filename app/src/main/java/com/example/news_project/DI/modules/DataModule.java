@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.news_project.data.NewsDatabase;
+import com.example.news_project.data.news.Api.NewsApiService;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -17,28 +18,26 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import rx.schedulers.Schedulers;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class DataModule {
+
+    @Provides
+    public NewsApiService provideNewsApiService(Retrofit retrofit) {
+        return retrofit.create(NewsApiService.class);
+    }
 
     @Singleton
     @Provides
     public NewsDatabase provideDataBase(Context context){
         String dbName = "dataBase";
-        RoomDatabase.QueryCallback logCallback = new RoomDatabase.QueryCallback() {
-            @Override
-            public void onQuery(@NonNull String s, @NonNull List<?> list) {
-                Log.e(s, "запрос в базу");
-                Log.e(list.toString(), "тело запросв");
-            }
-        };
         return Room.databaseBuilder(context, NewsDatabase.class, dbName)
-                .setQueryCallback(logCallback, Executors.newSingleThreadExecutor())
                 .build();
     }
 
@@ -49,9 +48,6 @@ public class DataModule {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory
-                .createWithScheduler(Schedulers.io());
-
         OkHttpClient client = new OkHttpClient
                 .Builder()
                 .addInterceptor(interceptor)
@@ -61,7 +57,8 @@ public class DataModule {
                 .Builder()
                 .client(client)
                 .baseUrl(baseUrl)
-                .addCallAdapterFactory(rxAdapter)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .build();
     }
 }

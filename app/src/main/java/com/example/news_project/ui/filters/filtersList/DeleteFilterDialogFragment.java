@@ -13,17 +13,21 @@ import com.example.news_project.R;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.ui.Codes;
 
+import java.util.function.Consumer;
+
 import javax.inject.Inject;
 
 public class DeleteFilterDialogFragment extends DialogFragment {
 
-    @Inject
-    FiltersViewModel viewModel;
+    private final Consumer<Filter> deleteFilterAction;
+
+    public DeleteFilterDialogFragment(Consumer<Filter> action){
+        deleteFilterAction = action;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        ((DaggerApp) requireActivity().getApplication()).getAppComponent().inject(this);
         return new AlertDialog.Builder(requireContext())
                 .setMessage(getString(R.string.delete_filter_accept))
                 .setPositiveButton(
@@ -34,7 +38,7 @@ public class DeleteFilterDialogFragment extends DialogFragment {
 
     private void deleteFilterAction() {
         Filter filter = (Filter) requireArguments().getSerializable(Codes.FILTER_KEY);
-        viewModel.deleteFilter(filter);
+        deleteFilterAction.accept(filter);
         this.dismiss();
     }
 
