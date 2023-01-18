@@ -36,13 +36,12 @@ public interface DataBaseDao {
     void deleteNewsByFilter(String filterName);
 
     @Query("SELECT * FROM News")
-    Flowable<List<NewsEntity>> getNews();
+    Flowable<List<NewsEntity>> getAllNews();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertNews(NewsEntity news);
 
-    @Delete
-    void deleteNews(NewsEntity news);
-
+    @Query("DELETE FROM News")
+    void clearNews();
 
 }

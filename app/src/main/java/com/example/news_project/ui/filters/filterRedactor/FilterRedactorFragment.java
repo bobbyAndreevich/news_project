@@ -79,13 +79,15 @@ public class FilterRedactorFragment extends Fragment {
     }
 
     private void updateFilterAction() {
-        Filter filter = (Filter) requireArguments().getSerializable(Codes.FILTER_KEY);
-        binding.editDescription.setText(filter.description);
-        binding.editName.setText(filter.name);
+        Filter oldFilter = (Filter) requireArguments().getSerializable(Codes.FILTER_KEY);
+        Filter newFilter = new Filter();
+        newFilter.id = oldFilter.id;
+        binding.editDescription.setText(oldFilter.description);
+        binding.editName.setText(oldFilter.name);
         binding.saveFilterFab.setOnClickListener(click -> {
-            filter.name = binding.editName.getText().toString();
-            filter.description = binding.editDescription.getText().toString();
-            viewModel.updateFilter(filter);
+            newFilter.name = binding.editName.getText().toString();
+            newFilter.description = binding.editDescription.getText().toString();
+            viewModel.updateFilter(oldFilter, newFilter);
             navController.navigate(R.id.action_filterRedactorFragment_to_filtersFragment2);
         });
     }

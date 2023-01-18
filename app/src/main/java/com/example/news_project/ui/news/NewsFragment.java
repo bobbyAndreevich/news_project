@@ -9,6 +9,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,15 @@ import android.view.ViewGroup;
 import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.R;
 import com.example.news_project.databinding.FragmentNewsBinding;
-import com.example.news_project.databinding.NewsListFragmentBinding;
+import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.ui.Codes;
+import com.example.news_project.ui.news.selectFilter.Filters;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import dagger.Reusable;
 
 
 public class NewsFragment extends Fragment {
@@ -43,6 +48,7 @@ public class NewsFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         ((DaggerApp) requireActivity().getApplication()).getAppComponent().inject(this);
         binding = FragmentNewsBinding.inflate(inflater, container, false);
+        binding.currentTheme.setText("Ваша тема");
         return binding.getRoot();
     }
 
@@ -56,22 +62,42 @@ public class NewsFragment extends Fragment {
     private void initButtons(){
         binding.toFiltersButton.setOnClickListener(click ->
                 navController.navigate(R.id.action_newsFragment_to_filtersFragment2));
+        binding.selectFilterButton.setOnClickListener(click ->
+                showSelectFilterDialog());
+    }
+
+    private void showSelectFilterDialog(){
+        Filters filters = new Filters();
+        filters.list = viewModel.mutableFilters.getValue();
+        OnSelectFilterAction onSelectFilter = new OnSelectFilterAction();
+        onSelectFilter.action = this::onSelectFilter;
+        NewsFragmentDirections
+                .ActionNewsFragmentToFilterSelectDialogFragment action = NewsFragmentDirections
+                .actionNewsFragmentToFilterSelectDialogFragment(filters, onSelectFilter);
+        navController.navigate(action);
     }
 
     private void newsDateWatcher(News news){
         binding.dateTimeText.setText(news.publishedDate);
     }
 
+    private void onSelectFilter(Filter filter) {
+        binding.currentTheme.setText(filter.name);
+        viewModel.setFilter(filter);
+    }
+
     private void initAdapter(){
         binding.newsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         viewModel.adapter.setOnNewsClick(this::onNewsClick);
         viewModel.adapter.setOnNewsDate(this::newsDateWatcher);
-        viewModel.mutableNews.observe(getViewLifecycleOwner(), news -> viewModel.adapter.submitList(news));
+        viewModel.filteredNews.observe(getViewLifecycleOwner(),
+                news -> viewModel.adapter.submitList(news));
         binding.newsList.setAdapter(viewModel.adapter);
     }
 
     private void onNewsClick(News news){
         Bundle bundle = new Bundle();
         bundle.putString(Codes.URL_KEY, news.newsUrl);
+        navController.navigate(R.id.action_newsFragment_to_webNewsFragment, bundle);
     }
 }

@@ -11,6 +11,8 @@ import com.example.news_project.domain.use_cases.filter.DeleteFilterUseCase;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
 import com.example.news_project.domain.use_cases.filter.UpdateFilterUseCase;
 
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -20,7 +22,7 @@ import dagger.Reusable;
 public abstract class FilterModule {
 
     @Binds
-    @Reusable
+    @Singleton
     public abstract IFilterRepository provideFilterRepository(FilterRepositoryImpl impl);
 
 }

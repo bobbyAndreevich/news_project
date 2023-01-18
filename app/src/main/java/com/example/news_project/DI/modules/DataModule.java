@@ -2,17 +2,13 @@ package com.example.news_project.DI.modules;
 
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
 import com.example.news_project.data.NewsDatabase;
 import com.example.news_project.data.news.Api.NewsApiService;
 
-import java.util.List;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -45,11 +41,13 @@ public class DataModule {
     @Provides
     public Retrofit provideRetrofit() {
         String baseUrl = "https://newsapi.org/";
+
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient
                 .Builder()
+                .connectTimeout(5, TimeUnit.MINUTES)
                 .addInterceptor(interceptor)
                 .build();
 

@@ -10,6 +10,8 @@ import com.example.news_project.data.news.NewsRepositoryImpl;
 import com.example.news_project.domain.INewsRepository;
 import com.example.news_project.domain.use_cases.news.GetNewsUseCase;
 
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
@@ -19,7 +21,7 @@ import dagger.Reusable;
 public abstract class NewsModule {
 
     @Binds
-    @Reusable
+    @Singleton
     public abstract INewsRepository provideNewsRepository(NewsRepositoryImpl impl);
 
 }

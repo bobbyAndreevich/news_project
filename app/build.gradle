@@ -1,5 +1,7 @@
 plugins {
     id 'com.android.application'
+    id 'androidx.navigation.safeargs'
+
 }
 
 android {
@@ -18,6 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,6 +31,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
         viewBinding true
     }
@@ -36,7 +40,6 @@ android {
 
 dependencies {
 
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.7.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def glide_version = "4.14.2"
     def lifecycle_version = "2.5.1"

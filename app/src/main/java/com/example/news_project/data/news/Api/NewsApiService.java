@@ -14,6 +14,10 @@ import retrofit2.http.QueryMap;
 
 public interface NewsApiService {
 
-    @GET("/v2/everything")
-    Flowable<NewsEntityQuery> getNews(@Query("q") String target, @Query("apiKey") String apiKey);
+    @GET("v2/everything")
+    Single<NewsEntityQuery> getNews(
+            @Query("q") String target,
+            @Query("apiKey") String apiKey,
+            @Query("language") String language,
+            @Query("sortBy") String sortBy);
 }

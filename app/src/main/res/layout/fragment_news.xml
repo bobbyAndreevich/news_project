@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:text="@string/noNewsText"
         android:textSize="32sp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,8 +25,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/buttonsGrouper"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/dateTimeText"
@@ -36,7 +37,6 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/shape_corner"
         android:padding="4dp"
-        android:text="2023-01-19"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:drawableTint="@color/grey"
@@ -48,13 +48,12 @@
         android:id="@+id/buttonsGrouper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:divider="@drawable/divider"
         android:orientation="horizontal"
-        android:showDividers="middle"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsList">
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/toFiltersButton"
@@ -64,6 +63,16 @@
             android:text="@string/to_filters"
             android:textColor="@android:color/white"
             app:backgroundTint="@color/grey" />
+
+        <TextView
+            android:textSize="18sp"
+            android:id="@+id/currentTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_corner" />
 
         <Button
             android:id="@+id/selectFilterButton"

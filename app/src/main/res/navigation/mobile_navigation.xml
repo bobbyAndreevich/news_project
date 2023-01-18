@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_filtersFragment2_to_filterRedactorFragment"
             app:destination="@id/filterRedactorFragment" />
+        <action
+            android:id="@+id/action_filtersFragment2_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterRedactorFragment"
@@ -30,5 +33,30 @@
         <action
             android:id="@+id/action_newsFragment_to_filtersFragment2"
             app:destination="@id/filtersFragment2" />
+        <action
+            android:id="@+id/action_newsFragment_to_filterSelectDialogFragment"
+            app:destination="@id/filterSelectDialogFragment" />
+        <action
+            android:id="@+id/action_newsFragment_to_webNewsFragment"
+            app:destination="@id/webNewsFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/filterSelectDialogFragment"
+        android:name="com.example.news_project.ui.news.selectFilter.FilterSelectDialogFragment"
+        android:label="FilterSelectDialogFragment" >
+        <argument
+            android:name="filters"
+            app:argType="com.example.news_project.ui.news.selectFilter.Filters"
+            app:nullable="true" />
+        <argument
+            android:name="OnSelectAction"
+            app:argType="com.example.news_project.ui.news.OnSelectFilterAction" />
+    </dialog>
+    <fragment
+        android:id="@+id/webNewsFragment"
+        android:name="com.example.news_project.ui.news.WebNewsFragment"
+        android:label="fragment_web_news"
+        tools:layout="@layout/fragment_web_news" />
+
+
 </navigation>

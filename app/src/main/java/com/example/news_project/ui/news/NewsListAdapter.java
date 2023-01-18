@@ -21,6 +21,7 @@ import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.ui.filters.filtersList.FiltersListAdapter;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class NewsListAdapter extends ListAdapter<News, NewsListAdapter.NewsViewHolder> {
@@ -43,6 +44,16 @@ public class NewsListAdapter extends ListAdapter<News, NewsListAdapter.NewsViewH
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         holder.bind(getItem(position));
         onNewsDate.accept(getItem(position));
@@ -58,7 +69,11 @@ public class NewsListAdapter extends ListAdapter<News, NewsListAdapter.NewsViewH
             binding.titleText.setText(news.title);
             binding.author.setText(news.author);
             binding.newsDescriptionText.setText(news.description);
-            Glide.with(binding.getRoot()).load(news.imageUrl).centerCrop().listener(new GlideRequestListener()).into(binding.photo);
+            Glide.with(binding.getRoot())
+                    .load(news.imageUrl)
+                    .centerCrop()
+                    .listener(new GlideRequestListener())
+                    .into(binding.photo);
         }
     }
 
@@ -94,7 +109,8 @@ public class NewsListAdapter extends ListAdapter<News, NewsListAdapter.NewsViewH
 
         @Override
         public boolean areContentsTheSame(@NonNull News oldItem, @NonNull News newItem) {
-            return oldItem.newsUrl.equals(newItem.newsUrl);
+            return Objects.equals(oldItem.author, newItem.author)
+                    && Objects.equals(oldItem.title, newItem.title);
         }
     }
 }

@@ -18,6 +18,7 @@ public class NewsEntity {
     @PrimaryKey
     @NonNull
     @SerializedName("url")
+    @ColumnInfo(name = "news_url")
     public String newsUrl;
 
     @SerializedName("author")

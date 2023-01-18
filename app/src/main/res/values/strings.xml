@@ -24,4 +24,6 @@
     <string name="to_filters">мои темы</string>
     <string name="select_filter">выбрать тему</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_all_filters">выбрать все</string>
+    <string name="select_filter_text">выберите фильтр</string>
 </resources>

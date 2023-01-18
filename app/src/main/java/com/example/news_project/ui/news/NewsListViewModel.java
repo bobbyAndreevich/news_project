@@ -1,6 +1,6 @@
 package com.example.news_project.ui.news;
 
-import android.widget.Filterable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -14,9 +14,9 @@ import com.example.news_project.domain.enities.News;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
 import com.example.news_project.domain.use_cases.news.GetNewsUseCase;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -27,13 +27,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NewsListViewModel extends ViewModel implements LifecycleOwner{
 
-    public final MutableLiveData<List<News>> mutableNews = new MutableLiveData<>();
+    private final MutableLiveData<List<News>> notFilteredNews = new MutableLiveData<>();
+
+    public final MutableLiveData<List<News>> filteredNews = new MutableLiveData<>();
+
     public final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
 
     public NewsListAdapter adapter = new NewsListAdapter();
 
-    public MutableLiveData<Integer> selectedFilter = new MutableLiveData<>(0);
-    private List<News> notFilteredNews = new ArrayList<>();
+    Comparator<News> comparator = Comparator.comparing(News::getDateValue);
 
     private final CompositeDisposable disposable = new CompositeDisposable();
     private final GetFiltersUseCase getFiltersUseCase;
@@ -43,10 +45,6 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner{
     NewsListViewModel(GetFiltersUseCase getFiltersUseCase, GetNewsUseCase getNewsUseCase) {
         this.getFiltersUseCase = getFiltersUseCase;
         this.getNewsUseCase = getNewsUseCase;
-        loadData();
-    }
-
-    private void loadData() {
         loadNews();
         loadFilters();
     }
@@ -56,7 +54,11 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner{
                 .execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::observeNews));
+                .subscribe(news ->
+                        notFilteredNews.setValue(news
+                                .stream()
+                                .sorted(comparator)
+                                .collect(Collectors.toList()))));
     }
 
     private void loadFilters() {
@@ -67,17 +69,16 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner{
                 .subscribe(mutableFilters::setValue));
     }
 
-    private void observeNews(List<News> news) {
-        Comparator<News> comparator = Comparator.comparing(News::getDateValue);
-        if (0 != selectedFilter.getValue()) {
-            notFilteredNews = news.stream().sorted(comparator).collect(Collectors.toList());
-            mutableNews.setValue(notFilteredNews.stream()
-                    .filter(it -> it.filter.equals(mutableFilters.getValue()
-                            .get(selectedFilter.getValue() - 1).name)).collect(Collectors.toList()));
-        } else {
-            mutableNews.setValue(news.stream().sorted(comparator).collect(Collectors.toList()));
-            notFilteredNews = mutableNews.getValue();
-        }
+    public void setFilter(Filter filter){
+        filteredNews.setValue(
+                Objects.requireNonNull(notFilteredNews
+                        .getValue())
+                        .stream()
+                        .filter(it -> {
+                            Log.e(it.filter, filter.name);
+                            return it.filter.equals(filter.name);
+                        })
+                        .collect(Collectors.toList()));
     }
 
     @Override

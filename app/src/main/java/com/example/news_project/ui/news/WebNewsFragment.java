@@ -2,23 +2,25 @@ package com.example.news_project.ui.news;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.news_project.R;
+import com.example.news_project.databinding.FragmentWebNewsBinding;
 import com.example.news_project.databinding.WebViewFragmentBinding;
 import com.example.news_project.ui.Codes;
 
-public class WebViewFragment extends Fragment {
+public class WebNewsFragment extends Fragment {
 
-    WebViewFragmentBinding binding;
+    FragmentWebNewsBinding binding;
 
-    public WebViewFragment(){
+    public WebNewsFragment(){
         super(R.layout.web_view_fragment);
     }
 
@@ -26,7 +28,7 @@ public class WebViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        binding = WebViewFragmentBinding.inflate(inflater, container, false);
+        binding = FragmentWebNewsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

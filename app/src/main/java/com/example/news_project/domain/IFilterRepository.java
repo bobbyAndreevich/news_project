@@ -16,7 +16,7 @@ public interface IFilterRepository {
 
     void deleteFilter(Filter filter);
 
-    void updateFilter(Filter filter);
+    void updateFilter(Filter newFilter, Filter oldFilter);
 
     Flowable<List<Filter>> getFilters();
 

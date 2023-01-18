@@ -1,4 +1,4 @@
-package com.example.news_project.ui.filters.filtersList;
+package com.example.news_project.ui.news.selectFilter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +13,16 @@ import com.example.news_project.databinding.FilterItemBinding;
 import com.example.news_project.domain.enities.Filter;
 
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
-public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.FilterViewHolder> {
+public class SelectFiltersListAdapter extends ListAdapter<Filter, SelectFiltersListAdapter.FilterViewHolder> {
 
     private Consumer<Filter> onItemClick;
 
-    private Predicate<Filter> onLongPress;
+    private Runnable dismiss;
 
     private FilterItemBinding binding;
 
-
-    public FiltersListAdapter() {
+    public SelectFiltersListAdapter() {
         super(new DiffCallback());
     }
 
@@ -32,8 +30,8 @@ public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.F
         this.onItemClick = action;
     }
 
-    public void setOnLongPress(Predicate<Filter> action) {
-        this.onLongPress = action;
+    public void setDismiss(Runnable dismiss){
+        this.dismiss = dismiss;
     }
 
     @NonNull
@@ -64,8 +62,10 @@ public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.F
     public class FilterViewHolder extends RecyclerView.ViewHolder {
         public FilterViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(click -> onItemClick.accept(getItem(getAdapterPosition())));
-            itemView.setOnLongClickListener(press -> onLongPress.test(getItem(getAdapterPosition())));
+            itemView.setOnClickListener(click -> {
+                onItemClick.accept(getItem(getAdapterPosition()));
+                dismiss.run();
+            });
         }
 
         public void bind(Filter filter) {
@@ -73,4 +73,5 @@ public class FiltersListAdapter extends ListAdapter<Filter, FiltersListAdapter.F
             binding.filterDescription.setText(filter.description);
         }
     }
+
 }

@@ -14,7 +14,7 @@ public class UpdateFilterUseCase {
         this.repository = repository;
     }
 
-    public void execute(Filter filter){
-        repository.updateFilter(filter);
+    public void execute(Filter newFilter, Filter oldFilter){
+        repository.updateFilter(newFilter, oldFilter);
     }
 }

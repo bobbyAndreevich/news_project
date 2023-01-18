@@ -38,9 +38,9 @@ public class FiltersRedactorViewModel extends ViewModel {
                 .subscribe();
     }
 
-    public void updateFilter(Filter filter) {
+    public void updateFilter(Filter newFilter, Filter oldFilter) {
         Completable
-                .fromAction(() -> updateFilterUseCase.execute(filter))
+                .fromAction(() -> updateFilterUseCase.execute(newFilter, oldFilter))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
