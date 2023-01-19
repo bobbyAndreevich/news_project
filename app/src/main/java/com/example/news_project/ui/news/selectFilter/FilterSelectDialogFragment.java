@@ -4,38 +4,38 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.news_project.R;
 import com.example.news_project.databinding.FragmentFilterSelectBinding;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.ui.news.selectFilter.arguments.Filters;
 import com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction;
 
-public class FilterSelectDialogFragment extends DialogFragment {
+import java.util.Objects;
 
-    Filters filters;
+public class FilterSelectDialogFragment extends DialogFragment {
 
     SelectFiltersListAdapter adapter;
 
     FragmentFilterSelectBinding binding;
 
-    @NonNull
+    @Nullable
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentFilterSelectBinding.inflate(getLayoutInflater());
         binding.selectAllButton.setOnClickListener(click -> onSelectAllClick());
-        Log.e("создался", "");
-        filters = FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getFilter();
         initAdapter();
-        return new AlertDialog
-                .Builder(requireActivity())
-                .setView(binding.getRoot())
-                .create();
+        Objects.requireNonNull(getDialog()).getWindow()
+                .setBackgroundDrawableResource(R.drawable.dialog_back);
+        return binding.getRoot();
     }
 
     @Override
@@ -53,8 +53,13 @@ public class FilterSelectDialogFragment extends DialogFragment {
     }
 
     private void initAdapter() {
+        Filters filters = FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getFilter();
         binding.selectFiltersList.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new SelectFiltersListAdapter();
+        if(filters.list.isEmpty()){
+            binding.noFiltersText.setVisibility(View.VISIBLE);
+            binding.selectAllButton.setVisibility(View.GONE);
+        }
         adapter.submitList(filters.list);
         adapter.setOnItemClick(FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getOnSelectAction());
         adapter.setDismiss(this::dismiss);

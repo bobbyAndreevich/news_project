@@ -74,6 +74,7 @@ public class NewsFragment extends Fragment {
     }
 
     private void newsDateWatcher(News news) {
+        binding.dateTimeText.setVisibility(View.VISIBLE);
         binding.dateTimeText.setText(news.publishedDate);
     }
 

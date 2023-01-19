@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/dialog_back"
     android:layout_width="match_parent"
+    android:minWidth="260dp"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/selectAllButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/select_all_filters"
         android:textColor="@android:color/white"
         app:backgroundTint="@color/grey"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintHeight_default="wrap"
@@ -36,4 +39,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/noFiltersText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Фильтров нет"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/selectFiltersList"
+        app:layout_constraintEnd_toEndOf="@+id/selectFiltersList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/selectFiltersList" />
 </androidx.constraintlayout.widget.ConstraintLayout>

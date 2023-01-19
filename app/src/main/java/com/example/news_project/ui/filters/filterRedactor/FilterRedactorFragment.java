@@ -105,4 +105,5 @@ public class FilterRedactorFragment extends Fragment {
         disposables.clear();
         super.onDestroy();
     }
+
 }
