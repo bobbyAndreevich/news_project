@@ -17,9 +17,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.news_project.databinding.NewsItemBinding;
-import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
-import com.example.news_project.ui.filters.filtersList.FiltersListAdapter;
 
 import java.util.Objects;
 import java.util.function.Consumer;

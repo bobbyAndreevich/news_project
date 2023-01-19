@@ -45,12 +45,11 @@
         android:name="com.example.news_project.ui.news.selectFilter.FilterSelectDialogFragment"
         android:label="FilterSelectDialogFragment" >
         <argument
-            android:name="filters"
-            app:argType="com.example.news_project.ui.news.selectFilter.Filters"
-            app:nullable="true" />
+            android:name="filter"
+            app:argType="com.example.news_project.ui.news.selectFilter.arguments.Filters" />
         <argument
-            android:name="OnSelectAction"
-            app:argType="com.example.news_project.ui.news.OnSelectFilterAction" />
+            android:name="onSelectAction"
+            app:argType="com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction" />
     </dialog>
     <fragment
         android:id="@+id/webNewsFragment"

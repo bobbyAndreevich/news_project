@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,7 +25,6 @@ import javax.inject.Inject;
 
 public class FiltersFragment extends Fragment {
 
-    @Inject
     public FiltersViewModel viewModel;
 
     private FragmentFiltersBinding binding;
@@ -40,7 +40,8 @@ public class FiltersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         navController = NavHostFragment.findNavController(this);
-        ((DaggerApp) requireActivity().getApplication()).getAppComponent().inject(this);
+        viewModel = new ViewModelProvider(this).get(FiltersViewModel.class);
+        viewModel.init();
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -49,7 +50,6 @@ public class FiltersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.addFilterFab.setOnClickListener(click -> createFilter());
-        viewModel.init();
         initAdapter();
     }
 

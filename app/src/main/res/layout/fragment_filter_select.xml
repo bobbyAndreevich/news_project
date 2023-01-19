@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/dialog_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,17 +15,17 @@
         app:backgroundTint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintHeight_default="wrap"
         android:id="@+id/selectFiltersList"
         android:layout_width="0dp"
         android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/select_filter_text"
+        app:layout_constraintBottom_toTopOf="@+id/selectAllButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectAllButton" />
+        app:layout_constraintTop_toBottomOf="@+id/select_filter_text" />
 
     <TextView
         android:text="@string/select_filter_text"
@@ -32,7 +33,7 @@
         android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

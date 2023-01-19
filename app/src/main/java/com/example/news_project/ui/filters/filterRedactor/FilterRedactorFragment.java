@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -28,7 +29,6 @@ public class FilterRedactorFragment extends Fragment {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
 
-    @Inject
     public FiltersRedactorViewModel viewModel;
 
     private NavController navController;
@@ -43,8 +43,8 @@ public class FilterRedactorFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DaggerApp daggerApp = (DaggerApp) requireActivity().getApplication();
-        daggerApp.getAppComponent().inject(this);
+        viewModel = new ViewModelProvider(this).get(FiltersRedactorViewModel.class);
+        viewModel.init();
         binding = FragmentFilterRedactorBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -74,7 +74,7 @@ public class FilterRedactorFragment extends Fragment {
                     filter.name = binding.editName.getText().toString();
                     filter.description = binding.editDescription.getText().toString();
                     viewModel.addFilter(filter);
-                    navController.navigate(R.id.action_filterRedactorFragment_to_filtersFragment2);
+                    getActivity().getSupportFragmentManager().popBackStack();
                 });
     }
 
@@ -87,8 +87,8 @@ public class FilterRedactorFragment extends Fragment {
         binding.saveFilterFab.setOnClickListener(click -> {
             newFilter.name = binding.editName.getText().toString();
             newFilter.description = binding.editDescription.getText().toString();
-            viewModel.updateFilter(oldFilter, newFilter);
-            navController.navigate(R.id.action_filterRedactorFragment_to_filtersFragment2);
+            viewModel.updateFilter(newFilter, oldFilter);
+            getActivity().getSupportFragmentManager().popBackStack();
         });
     }
 

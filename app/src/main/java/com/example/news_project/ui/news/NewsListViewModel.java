@@ -9,6 +9,8 @@ import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.news_project.DI.ApplicationComponent;
+import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
@@ -25,7 +27,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class NewsListViewModel extends ViewModel implements LifecycleOwner{
+public class NewsListViewModel extends ViewModel implements LifecycleOwner {
 
     private final MutableLiveData<List<News>> notFilteredNews = new MutableLiveData<>();
 
@@ -38,13 +40,16 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner{
     Comparator<News> comparator = Comparator.comparing(News::getDateValue);
 
     private final CompositeDisposable disposable = new CompositeDisposable();
-    private final GetFiltersUseCase getFiltersUseCase;
-    private final GetNewsUseCase getNewsUseCase;
 
     @Inject
-    NewsListViewModel(GetFiltersUseCase getFiltersUseCase, GetNewsUseCase getNewsUseCase) {
-        this.getFiltersUseCase = getFiltersUseCase;
-        this.getNewsUseCase = getNewsUseCase;
+    GetFiltersUseCase getFiltersUseCase;
+
+    @Inject
+    GetNewsUseCase getNewsUseCase;
+
+    void init() {
+        ApplicationComponent app = DaggerApp.getAppComponent();
+        app.inject(this);
         loadNews();
         loadFilters();
     }
@@ -69,16 +74,20 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner{
                 .subscribe(mutableFilters::setValue));
     }
 
-    public void setFilter(Filter filter){
-        filteredNews.setValue(
-                Objects.requireNonNull(notFilteredNews
-                        .getValue())
-                        .stream()
-                        .filter(it -> {
-                            Log.e(it.filter, filter.name);
-                            return it.filter.equals(filter.name);
-                        })
-                        .collect(Collectors.toList()));
+    public void setFilter(Filter filter) {
+        if (filter.name.equals("Все")) {
+            filteredNews.setValue(notFilteredNews.getValue());
+        } else {
+            filteredNews.setValue(
+                    Objects.requireNonNull(notFilteredNews
+                            .getValue())
+                            .stream()
+                            .filter(it -> {
+                                Log.e(it.filter, filter.name);
+                                return it.filter.equals(filter.name);
+                            })
+                            .collect(Collectors.toList()));
+        }
     }
 
     @Override

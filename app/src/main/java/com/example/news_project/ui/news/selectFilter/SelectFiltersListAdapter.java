@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.news_project.databinding.FilterItemBinding;
+import com.example.news_project.databinding.SelectFilterListItemBinding;
 import com.example.news_project.domain.enities.Filter;
 
 import java.util.function.Consumer;
@@ -20,7 +20,7 @@ public class SelectFiltersListAdapter extends ListAdapter<Filter, SelectFiltersL
 
     private Runnable dismiss;
 
-    private FilterItemBinding binding;
+    private SelectFilterListItemBinding binding;
 
     public SelectFiltersListAdapter() {
         super(new DiffCallback());
@@ -30,14 +30,15 @@ public class SelectFiltersListAdapter extends ListAdapter<Filter, SelectFiltersL
         this.onItemClick = action;
     }
 
-    public void setDismiss(Runnable dismiss){
+    public void setDismiss(Runnable dismiss) {
         this.dismiss = dismiss;
     }
 
     @NonNull
     @Override
     public FilterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = FilterItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        binding = SelectFilterListItemBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new FilterViewHolder(binding.getRoot());
     }
 
@@ -69,8 +70,7 @@ public class SelectFiltersListAdapter extends ListAdapter<Filter, SelectFiltersL
         }
 
         public void bind(Filter filter) {
-            binding.filterName.setText(filter.name);
-            binding.filterDescription.setText(filter.description);
+            binding.textView.setText(filter.name);
         }
     }
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.use_cases.filter.DeleteFilterUseCase;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
@@ -23,20 +24,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FiltersViewModel extends ViewModel implements LifecycleOwner {
 
-    private final GetFiltersUseCase getFiltersUseCase;
-    private final DeleteFilterUseCase deleteFilterUseCase;
+    @Inject
+    GetFiltersUseCase getFiltersUseCase;
+    @Inject
+    DeleteFilterUseCase deleteFilterUseCase;
     private final CompositeDisposable disposable = new CompositeDisposable();
     public FiltersListAdapter adapter = new FiltersListAdapter();
 
     private final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
 
-    @Inject
-    public FiltersViewModel(GetFiltersUseCase getFiltersUseCase, DeleteFilterUseCase deleteFilterUseCase) {
-        this.getFiltersUseCase = getFiltersUseCase;
-        this.deleteFilterUseCase = deleteFilterUseCase;
-    }
-
     public void init() {
+        DaggerApp.getAppComponent().inject(this);
         loadFilters();
     }
 

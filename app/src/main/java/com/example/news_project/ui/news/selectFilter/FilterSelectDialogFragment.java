@@ -12,6 +12,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.news_project.databinding.FragmentFilterSelectBinding;
+import com.example.news_project.domain.enities.Filter;
+import com.example.news_project.ui.news.selectFilter.arguments.Filters;
+import com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction;
 
 public class FilterSelectDialogFragment extends DialogFragment {
 
@@ -25,8 +28,9 @@ public class FilterSelectDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         binding = FragmentFilterSelectBinding.inflate(getLayoutInflater());
+        binding.selectAllButton.setOnClickListener(click -> onSelectAllClick());
         Log.e("создался", "");
-        filters = FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getFilters();
+        filters = FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getFilter();
         initAdapter();
         return new AlertDialog
                 .Builder(requireActivity())
@@ -39,7 +43,16 @@ public class FilterSelectDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void initAdapter(){
+    private void onSelectAllClick() {
+        OnSelectFilterAction action = FilterSelectDialogFragmentArgs
+                .fromBundle(getArguments()).getOnSelectAction();
+        Filter filter = new Filter();
+        filter.name = "Все";
+        action.accept(filter);
+        this.dismiss();
+    }
+
+    private void initAdapter() {
         binding.selectFiltersList.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new SelectFiltersListAdapter();
         adapter.submitList(filters.list);

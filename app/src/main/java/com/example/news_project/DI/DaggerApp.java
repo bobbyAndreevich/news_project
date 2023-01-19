@@ -6,9 +6,9 @@ import com.example.news_project.DI.modules.ContextModule;
 
 public class DaggerApp  extends Application {
 
-    private ApplicationComponent _appComponent;
+    private static ApplicationComponent _appComponent;
 
-    public ApplicationComponent getAppComponent(){
+    public static ApplicationComponent getAppComponent(){
         if(_appComponent == null){
             throw new IllegalStateException();
         }

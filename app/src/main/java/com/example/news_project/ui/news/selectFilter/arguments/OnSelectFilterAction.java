@@ -1,14 +1,13 @@
-package com.example.news_project.ui.news;
+package com.example.news_project.ui.news.selectFilter.arguments;
 
 import com.example.news_project.domain.enities.Filter;
 
 import java.io.Serializable;
 import java.util.function.Consumer;
-import java.util.function.IntConsumer;
 
 public class OnSelectFilterAction implements Consumer<Filter>, Serializable {
 
-    Consumer<Filter> action;
+    public Consumer<Filter> action;
 
     @Override
     public void accept(Filter filter) {

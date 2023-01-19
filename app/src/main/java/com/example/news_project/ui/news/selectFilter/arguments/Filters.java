@@ -1,4 +1,4 @@
-package com.example.news_project.ui.news.selectFilter;
+package com.example.news_project.ui.news.selectFilter.arguments;
 
 import com.example.news_project.domain.enities.Filter;
 

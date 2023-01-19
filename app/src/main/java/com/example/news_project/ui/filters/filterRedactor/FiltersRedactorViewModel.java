@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.use_cases.filter.AddFilterUseCase;
 import com.example.news_project.domain.use_cases.filter.UpdateFilterUseCase;
@@ -18,17 +19,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FiltersRedactorViewModel extends ViewModel {
 
-    public String description = "";
-    public String name = "";
-
-    private final UpdateFilterUseCase updateFilterUseCase;
-    private final AddFilterUseCase addFilterUseCase;
-
-
     @Inject
-    FiltersRedactorViewModel(AddFilterUseCase addFilterUseCase, UpdateFilterUseCase updateFilterUseCase) {
-        this.addFilterUseCase = addFilterUseCase;
-        this.updateFilterUseCase = updateFilterUseCase;
+    UpdateFilterUseCase updateFilterUseCase;
+    @Inject
+    AddFilterUseCase addFilterUseCase;
+
+    void init(){
+        DaggerApp.getAppComponent().inject(this);
     }
 
     public void addFilter(Filter filter) {

@@ -24,7 +24,6 @@ public class FilterRepositoryImpl implements IFilterRepository {
     private final DataFilterToDomainMapper toDomainMapper;
     private final Flowable<List<FilterEntity>> filters;
 
-
     @Inject
     public FilterRepositoryImpl(
             NewsDatabase database,

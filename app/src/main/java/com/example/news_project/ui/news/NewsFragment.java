@@ -1,43 +1,38 @@
 package com.example.news_project.ui.news;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.news_project.DI.DaggerApp;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.news_project.R;
 import com.example.news_project.databinding.FragmentNewsBinding;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.ui.Codes;
-import com.example.news_project.ui.news.selectFilter.Filters;
+import com.example.news_project.ui.news.selectFilter.arguments.Filters;
+import com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import dagger.Reusable;
+import java.util.List;
 
 
 public class NewsFragment extends Fragment {
 
-    @Inject
     NewsListViewModel viewModel;
 
     private FragmentNewsBinding binding;
 
     private NavController navController;
 
-    public NewsFragment(){
+    public NewsFragment() {
         super(R.layout.news_list_fragment);
     }
 
@@ -46,7 +41,8 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         navController = NavHostFragment.findNavController(this);
-        ((DaggerApp) requireActivity().getApplication()).getAppComponent().inject(this);
+        viewModel = new ViewModelProvider(this).get(NewsListViewModel.class);
+        viewModel.init();
         binding = FragmentNewsBinding.inflate(inflater, container, false);
         binding.currentTheme.setText("Ваша тема");
         return binding.getRoot();
@@ -59,14 +55,14 @@ public class NewsFragment extends Fragment {
         initButtons();
     }
 
-    private void initButtons(){
+    private void initButtons() {
         binding.toFiltersButton.setOnClickListener(click ->
                 navController.navigate(R.id.action_newsFragment_to_filtersFragment2));
         binding.selectFilterButton.setOnClickListener(click ->
                 showSelectFilterDialog());
     }
 
-    private void showSelectFilterDialog(){
+    private void showSelectFilterDialog() {
         Filters filters = new Filters();
         filters.list = viewModel.mutableFilters.getValue();
         OnSelectFilterAction onSelectFilter = new OnSelectFilterAction();
@@ -77,7 +73,7 @@ public class NewsFragment extends Fragment {
         navController.navigate(action);
     }
 
-    private void newsDateWatcher(News news){
+    private void newsDateWatcher(News news) {
         binding.dateTimeText.setText(news.publishedDate);
     }
 
@@ -86,7 +82,7 @@ public class NewsFragment extends Fragment {
         viewModel.setFilter(filter);
     }
 
-    private void initAdapter(){
+    private void initAdapter() {
         binding.newsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         viewModel.adapter.setOnNewsClick(this::onNewsClick);
         viewModel.adapter.setOnNewsDate(this::newsDateWatcher);
@@ -95,9 +91,10 @@ public class NewsFragment extends Fragment {
         binding.newsList.setAdapter(viewModel.adapter);
     }
 
-    private void onNewsClick(News news){
+    private void onNewsClick(News news) {
         Bundle bundle = new Bundle();
         bundle.putString(Codes.URL_KEY, news.newsUrl);
         navController.navigate(R.id.action_newsFragment_to_webNewsFragment, bundle);
     }
+
 }
