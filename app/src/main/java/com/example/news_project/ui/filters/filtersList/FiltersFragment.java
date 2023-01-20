@@ -54,16 +54,16 @@ public class FiltersFragment extends Fragment {
     }
 
     private void createFilter(){
-        Bundle bundle = new Bundle();
-        bundle.putInt(Codes.REQUEST_CODE, Codes.ADD_FILTER);
-        navController.navigate(R.id.action_filtersFragment2_to_filterRedactorFragment, bundle);
+        FiltersFragmentDirections.ActionFiltersFragment2ToFilterRedactorFragment action =
+                FiltersFragmentDirections.actionFiltersFragment2ToFilterRedactorFragment();
+        navController.navigate(action);
     }
 
     private void editFilter(Filter filter){
-        Bundle bundle = new Bundle();
-        bundle.putInt(Codes.REQUEST_CODE, Codes.CHANGE_FILTER);
-        bundle.putSerializable(Codes.FILTER_KEY, filter);
-        navController.navigate(R.id.action_filtersFragment2_to_filterRedactorFragment, bundle);
+        FiltersFragmentDirections.ActionFiltersFragment2ToFilterRedactorFragment action =
+                FiltersFragmentDirections.actionFiltersFragment2ToFilterRedactorFragment();
+        action.setFilter(filter);
+        navController.navigate(action);
     }
 
     private void deleteFilter(Filter filter){
@@ -73,7 +73,8 @@ public class FiltersFragment extends Fragment {
     private boolean suggestDeleteFilter(Filter filter){
         Bundle bundle = new Bundle();
         bundle.putSerializable(Codes.FILTER_KEY, filter);
-        DeleteFilterDialogFragment dialogFragment = new DeleteFilterDialogFragment(this::deleteFilter);
+        DeleteFilterDialogFragment dialogFragment = new DeleteFilterDialogFragment();
+        dialogFragment.setDeleteFilterAction(this::deleteFilter);
         dialogFragment.setArguments(bundle);
         dialogFragment.show(
                 getChildFragmentManager(),
@@ -82,6 +83,8 @@ public class FiltersFragment extends Fragment {
     }
 
     private void initAdapter(){
+        viewModel.getFilters().observe(getViewLifecycleOwner(),
+                filters -> viewModel.adapter.submitList(filters));
         binding.filtersList.setLayoutManager(new LinearLayoutManager(requireContext()));
         viewModel.adapter.setOnItemClick(this::editFilter);
         viewModel.adapter.setOnLongPress(this::suggestDeleteFilter);

@@ -15,7 +15,12 @@ import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
 import com.example.news_project.domain.use_cases.news.GetNewsUseCase;
+import com.example.news_project.ui.news.newsAdapter.NewsListAdapter;
+import com.example.news_project.ui.news.newsAdapter.entities.NewsDate;
+import com.example.news_project.ui.news.newsAdapter.entities.NewsListDelegate;
+import com.example.news_project.ui.news.newsAdapter.entities.NewsWrapper;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -29,9 +34,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NewsListViewModel extends ViewModel implements LifecycleOwner {
 
-    private final MutableLiveData<List<News>> notFilteredNews = new MutableLiveData<>();
+    private List<News> notFilteredNews = new ArrayList<>();
 
-    public final MutableLiveData<List<News>> filteredNews = new MutableLiveData<>();
+    private List<News> filteredNews = new ArrayList<>();
+
+    public final MutableLiveData<List<NewsListDelegate>> newsListItems = new MutableLiveData<>();
 
     public final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
 
@@ -48,10 +55,22 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
     GetNewsUseCase getNewsUseCase;
 
     void init() {
-        ApplicationComponent app = DaggerApp.getAppComponent();
-        app.inject(this);
+        DaggerApp.getAppComponent().inject(this);
         loadNews();
         loadFilters();
+    }
+
+    private void collectNewsList(List<News> news){
+
+        ArrayList<NewsListDelegate> items = new ArrayList<>();
+        items.add(new NewsDate(news.get(0).publishedDate));
+            for(int newsIndex = 0; newsIndex < news.size()-1; newsIndex++){
+                items.add(new NewsWrapper(news.get(newsIndex)));
+                if(!news.get(newsIndex).publishedDate.equals(news.get(newsIndex + 1).publishedDate)){
+                    items.add(new NewsDate(news.get(newsIndex+1).publishedDate));
+                }
+            }
+            newsListItems.setValue(items);
     }
 
     private void loadNews() {
@@ -59,11 +78,7 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
                 .execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(news ->
-                        notFilteredNews.setValue(news
-                                .stream()
-                                .sorted(comparator)
-                                .collect(Collectors.toList()))));
+                .subscribe(news -> notFilteredNews = news));
     }
 
     private void loadFilters() {
@@ -76,18 +91,18 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
 
     public void setFilter(Filter filter) {
         if (filter.name.equals("Все")) {
-            filteredNews.setValue(notFilteredNews.getValue());
+            filteredNews = (Objects.requireNonNull(notFilteredNews)
+                    .stream()
+                    .sorted(comparator)
+                    .collect(Collectors.toList()));
         } else {
-            filteredNews.setValue(
-                    Objects.requireNonNull(notFilteredNews
-                            .getValue())
+            filteredNews = (Objects.requireNonNull(notFilteredNews)
                             .stream()
-                            .filter(it -> {
-                                Log.e(it.filter, filter.name);
-                                return it.filter.equals(filter.name);
-                            })
+                            .filter(it -> it.filter.equals(filter.name))
+                            .sorted(comparator)
                             .collect(Collectors.toList()));
         }
+        collectNewsList(Objects.requireNonNull(filteredNews));
     }
 
     @Override

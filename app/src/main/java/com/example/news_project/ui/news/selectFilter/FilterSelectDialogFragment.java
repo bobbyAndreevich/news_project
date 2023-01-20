@@ -53,7 +53,7 @@ public class FilterSelectDialogFragment extends DialogFragment {
     }
 
     private void initAdapter() {
-        Filters filters = FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getFilter();
+        Filters filters = FilterSelectDialogFragmentArgs.fromBundle(getArguments()).getFilters();
         binding.selectFiltersList.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new SelectFiltersListAdapter();
         if(filters.list.isEmpty()){

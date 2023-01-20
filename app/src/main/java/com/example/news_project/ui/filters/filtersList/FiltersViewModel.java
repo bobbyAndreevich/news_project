@@ -43,7 +43,7 @@ public class FiltersViewModel extends ViewModel implements LifecycleOwner {
                 .execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(filters -> adapter.submitList(filters)));
+                .subscribe(mutableFilters::setValue));
     }
 
     public LiveData<List<Filter>> getFilters() {

@@ -89,6 +89,8 @@ dependencies {
     //implementation "com.google.android.material:material$material_version"
     //Constraint
     implementation"androidx.constraintlayout:constraintlayout:2.1.4"
+    //AdapterDelegate
+    implementation 'com.hannesdorfmann:adapterdelegates4:4.3.2'
     testImplementation 'junit:junit:4.13.2'
     //Tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

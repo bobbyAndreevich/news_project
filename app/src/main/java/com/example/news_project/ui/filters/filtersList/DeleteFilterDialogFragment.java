@@ -19,11 +19,7 @@ import javax.inject.Inject;
 
 public class DeleteFilterDialogFragment extends DialogFragment {
 
-    private final Consumer<Filter> deleteFilterAction;
-
-    public DeleteFilterDialogFragment(Consumer<Filter> action){
-        deleteFilterAction = action;
-    }
+    private Consumer<Filter> deleteFilterAction;
 
     @NonNull
     @Override
@@ -40,6 +36,10 @@ public class DeleteFilterDialogFragment extends DialogFragment {
         Filter filter = (Filter) requireArguments().getSerializable(Codes.FILTER_KEY);
         deleteFilterAction.accept(filter);
         this.dismiss();
+    }
+
+    public void setDeleteFilterAction(Consumer<Filter> deleteFilterAction) {
+        this.deleteFilterAction = deleteFilterAction;
     }
 
     public static String TAG = "DeleteFilterDialogFragment";

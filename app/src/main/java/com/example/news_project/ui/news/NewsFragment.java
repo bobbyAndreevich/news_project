@@ -1,6 +1,7 @@
 package com.example.news_project.ui.news;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.example.news_project.databinding.FragmentNewsBinding;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.ui.Codes;
+import com.example.news_project.ui.news.newsAdapter.entities.NewsDate;
+import com.example.news_project.ui.news.newsAdapter.entities.NewsWrapper;
 import com.example.news_project.ui.news.selectFilter.arguments.Filters;
 import com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction;
 
@@ -69,13 +72,13 @@ public class NewsFragment extends Fragment {
         onSelectFilter.action = this::onSelectFilter;
         NewsFragmentDirections
                 .ActionNewsFragmentToFilterSelectDialogFragment action = NewsFragmentDirections
-                .actionNewsFragmentToFilterSelectDialogFragment(filters, onSelectFilter);
+                .actionNewsFragmentToFilterSelectDialogFragment(onSelectFilter, filters);
         navController.navigate(action);
     }
 
-    private void newsDateWatcher(News news) {
+    private void newsDateWatcher(NewsDate newsDate) {
         binding.dateTimeText.setVisibility(View.VISIBLE);
-        binding.dateTimeText.setText(news.publishedDate);
+        binding.dateTimeText.setText(newsDate.value);
     }
 
     private void onSelectFilter(Filter filter) {
@@ -87,15 +90,19 @@ public class NewsFragment extends Fragment {
         binding.newsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         viewModel.adapter.setOnNewsClick(this::onNewsClick);
         viewModel.adapter.setOnNewsDate(this::newsDateWatcher);
-        viewModel.filteredNews.observe(getViewLifecycleOwner(),
-                news -> viewModel.adapter.submitList(news));
+        viewModel.adapter.init();
+        viewModel.newsListItems.observe(getViewLifecycleOwner(), newsListDelegates ->{
+                    Log.e(Integer.toString(newsListDelegates.size()), "размер во фрагменте");
+                viewModel.adapter.submitItems(newsListDelegates);
+        }
+        );
         binding.newsList.setAdapter(viewModel.adapter);
     }
 
-    private void onNewsClick(News news) {
-        Bundle bundle = new Bundle();
-        bundle.putString(Codes.URL_KEY, news.newsUrl);
-        navController.navigate(R.id.action_newsFragment_to_webNewsFragment, bundle);
+    private void onNewsClick(NewsWrapper news) {
+        NewsFragmentDirections.ActionNewsFragmentToWebNewsFragment action =
+                NewsFragmentDirections.actionNewsFragmentToWebNewsFragment(news.value.newsUrl);
+        navController.navigate(action);
     }
 
 }
