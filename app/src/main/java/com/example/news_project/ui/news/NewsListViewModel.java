@@ -1,7 +1,5 @@
 package com.example.news_project.ui.news;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -9,16 +7,15 @@ import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.news_project.DI.ApplicationComponent;
 import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.enities.News;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
 import com.example.news_project.domain.use_cases.news.GetNewsUseCase;
 import com.example.news_project.ui.news.newsAdapter.NewsListAdapter;
-import com.example.news_project.ui.news.newsAdapter.entities.NewsDate;
-import com.example.news_project.ui.news.newsAdapter.entities.NewsListDelegate;
-import com.example.news_project.ui.news.newsAdapter.entities.NewsWrapper;
+import com.example.news_project.ui.news.entities.NewsDate;
+import com.example.news_project.ui.news.entities.NewsListDelegate;
+import com.example.news_project.ui.news.entities.NewsWrapper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -35,8 +32,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class NewsListViewModel extends ViewModel implements LifecycleOwner {
 
     private List<News> notFilteredNews = new ArrayList<>();
-
-    private List<News> filteredNews = new ArrayList<>();
 
     public final MutableLiveData<List<NewsListDelegate>> newsListItems = new MutableLiveData<>();
 
@@ -60,17 +55,20 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
         loadFilters();
     }
 
-    private void collectNewsList(List<News> news){
-
+    private void collectNewsList(List<News> news) {
+        if (news.isEmpty()) {
+            newsListItems.setValue(new ArrayList<>());
+            return;
+        }
         ArrayList<NewsListDelegate> items = new ArrayList<>();
         items.add(new NewsDate(news.get(0).publishedDate));
-            for(int newsIndex = 0; newsIndex < news.size()-1; newsIndex++){
-                items.add(new NewsWrapper(news.get(newsIndex)));
-                if(!news.get(newsIndex).publishedDate.equals(news.get(newsIndex + 1).publishedDate)){
-                    items.add(new NewsDate(news.get(newsIndex+1).publishedDate));
-                }
+        for (int newsIndex = 0; newsIndex < news.size() - 1; newsIndex++) {
+            items.add(new NewsWrapper(news.get(newsIndex)));
+            if (!news.get(newsIndex).publishedDate.equals(news.get(newsIndex + 1).publishedDate)) {
+                items.add(new NewsDate(news.get(newsIndex + 1).publishedDate));
             }
-            newsListItems.setValue(items);
+        }
+        newsListItems.setValue(items);
     }
 
     private void loadNews() {
@@ -90,6 +88,7 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
     }
 
     public void setFilter(Filter filter) {
+        List<News> filteredNews;
         if (filter.name.equals("Все")) {
             filteredNews = (Objects.requireNonNull(notFilteredNews)
                     .stream()
@@ -97,10 +96,10 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
                     .collect(Collectors.toList()));
         } else {
             filteredNews = (Objects.requireNonNull(notFilteredNews)
-                            .stream()
-                            .filter(it -> it.filter.equals(filter.name))
-                            .sorted(comparator)
-                            .collect(Collectors.toList()));
+                    .stream()
+                    .filter(it -> it.filter.equals(filter.name))
+                    .sorted(comparator)
+                    .collect(Collectors.toList()));
         }
         collectNewsList(Objects.requireNonNull(filteredNews));
     }

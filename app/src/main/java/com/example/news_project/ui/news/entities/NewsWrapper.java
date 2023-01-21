@@ -1,4 +1,4 @@
-package com.example.news_project.ui.news.newsAdapter.entities;
+package com.example.news_project.ui.news.entities;
 
 import com.example.news_project.domain.enities.News;
 
