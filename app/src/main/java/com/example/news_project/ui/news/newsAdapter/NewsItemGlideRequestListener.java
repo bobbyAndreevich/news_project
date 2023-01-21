@@ -26,7 +26,9 @@ class NewsItemGlideRequestListener implements RequestListener<Drawable> {
     }
 
     @Override
-    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+    public boolean onResourceReady(Drawable resource,
+                                   Object model,
+                                   Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
         binding.imageNews.setVisibility(View.VISIBLE);
         return false;
     }

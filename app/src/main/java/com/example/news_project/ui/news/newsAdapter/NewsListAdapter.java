@@ -1,20 +1,25 @@
 package com.example.news_project.ui.news.newsAdapter;
 
 import android.annotation.SuppressLint;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.news_project.R;
+import com.example.news_project.databinding.DateTimeItemBinding;
+import com.example.news_project.ui.news.entities.NewsDate;
 import com.example.news_project.ui.news.entities.NewsListDelegate;
 import com.example.news_project.ui.news.entities.NewsWrapper;
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager;
+import com.kodmap.library.kmrecyclerviewstickyheader.KmStickyListener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class NewsListAdapter extends RecyclerView.Adapter{
+public class NewsListAdapter extends RecyclerView.Adapter implements KmStickyListener {
 
     private final AdapterDelegatesManager<List<NewsListDelegate>> delegatesManager = new AdapterDelegatesManager<>();
 
@@ -59,5 +64,30 @@ public class NewsListAdapter extends RecyclerView.Adapter{
 
     public void setOnNewsClick(Consumer<NewsWrapper> onNewsClick) {
         this.onNewsClick = onNewsClick;
+    }
+
+    @Override
+    public Integer getHeaderPositionForItem(Integer itemPosition) {
+        int counter = itemPosition;
+        while(!(items.get(counter) instanceof NewsDate)){
+            counter--;
+        }
+        return counter;
+    }
+
+    @Override
+    public Integer getHeaderLayout(Integer headerPosition) {
+        return R.layout.date_time_item;
+    }
+
+    @Override
+    public void bindHeaderData(View header, Integer headerPosition) {
+        DateTimeItemBinding binding = DateTimeItemBinding.bind(header);
+        binding.dateTime.setText(((NewsDate) items.get(headerPosition)).value);
+    }
+
+    @Override
+    public Boolean isHeader(Integer itemPosition) {
+        return items.get(itemPosition) instanceof NewsDate;
     }
 }

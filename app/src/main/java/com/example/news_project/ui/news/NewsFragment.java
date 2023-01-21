@@ -20,6 +20,7 @@ import com.example.news_project.ui.news.entities.NewsListDelegate;
 import com.example.news_project.ui.news.entities.NewsWrapper;
 import com.example.news_project.ui.news.selectFilter.arguments.Filters;
 import com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction;
+import com.kodmap.library.kmrecyclerviewstickyheader.KmHeaderItemDecoration;
 
 import java.util.List;
 
@@ -79,6 +80,7 @@ public class NewsFragment extends Fragment {
     }
 
     private void initAdapter() {
+        binding.newsList.addItemDecoration(new KmHeaderItemDecoration(viewModel.adapter));
         binding.newsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         viewModel.adapter.setOnNewsClick(this::onNewsClick);
         viewModel.adapter.init();
