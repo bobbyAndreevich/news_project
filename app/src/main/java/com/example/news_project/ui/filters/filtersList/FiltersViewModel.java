@@ -24,12 +24,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FiltersViewModel extends ViewModel implements LifecycleOwner {
 
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
+    public FiltersListAdapter adapter = new FiltersListAdapter();
+
     @Inject
     GetFiltersUseCase getFiltersUseCase;
     @Inject
     DeleteFilterUseCase deleteFilterUseCase;
-    private final CompositeDisposable disposable = new CompositeDisposable();
-    public FiltersListAdapter adapter = new FiltersListAdapter();
 
     private final MutableLiveData<List<Filter>> mutableFilters = new MutableLiveData<>();
 
@@ -39,7 +41,7 @@ public class FiltersViewModel extends ViewModel implements LifecycleOwner {
     }
 
     private void loadFilters() {
-        disposable.add(getFiltersUseCase
+        disposables.add(getFiltersUseCase
                 .execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -51,15 +53,16 @@ public class FiltersViewModel extends ViewModel implements LifecycleOwner {
     }
 
     public void deleteFilter(Filter filter) {
-        Completable.fromAction(() -> deleteFilterUseCase.execute(filter))
+        disposables.add(Completable
+                .fromAction(() -> deleteFilterUseCase.execute(filter))
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe());
     }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        disposable.clear();
+        disposables.clear();
     }
 
     @NonNull

@@ -44,8 +44,9 @@ public class NewsFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         viewModel = new ViewModelProvider(this).get(NewsListViewModel.class);
         viewModel.init();
+        viewModel.currentFilter.observe(getViewLifecycleOwner(),
+                currentFilter -> binding.currentTheme.setText(currentFilter));
         binding = FragmentNewsBinding.inflate(inflater, container, false);
-        binding.currentTheme.setText("Ваша тема");
         return binding.getRoot();
     }
 

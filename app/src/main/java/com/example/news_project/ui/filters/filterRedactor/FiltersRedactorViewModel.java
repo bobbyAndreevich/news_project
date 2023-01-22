@@ -15,6 +15,7 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class FiltersRedactorViewModel extends ViewModel {
@@ -24,21 +25,29 @@ public class FiltersRedactorViewModel extends ViewModel {
     @Inject
     AddFilterUseCase addFilterUseCase;
 
+    CompositeDisposable disposables = new CompositeDisposable();
+
     void init(){
         DaggerApp.getAppComponent().inject(this);
     }
 
     public void addFilter(Filter filter) {
-        Completable
+        disposables.add(Completable
                 .fromAction(() -> addFilterUseCase.execute(filter))
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe());
     }
 
     public void updateFilter(Filter newFilter, Filter oldFilter) {
-        Completable
+        disposables.add(Completable
                 .fromAction(() -> updateFilterUseCase.execute(newFilter, oldFilter))
                 .subscribeOn(Schedulers.io())
-                .subscribe();
+                .subscribe());
+    }
+
+    @Override
+    protected void onCleared() {
+        disposables.clear();
+        super.onCleared();
     }
 }

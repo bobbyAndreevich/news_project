@@ -1,6 +1,6 @@
 package com.example.news_project.ui.news.entities;
 
-public class NewsDate implements NewsListDelegate {
+public class NewsDate extends NewsListDelegate {
 
     public String value;
 

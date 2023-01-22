@@ -31,6 +31,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NewsListViewModel extends ViewModel implements LifecycleOwner {
 
+    public MutableLiveData<String> currentFilter = new MutableLiveData<>("Ваша тема");
+
     private List<News> notFilteredNews = new ArrayList<>();
 
     public final MutableLiveData<List<NewsListDelegate>> newsListItems = new MutableLiveData<>();
@@ -88,6 +90,7 @@ public class NewsListViewModel extends ViewModel implements LifecycleOwner {
     }
 
     public void setFilter(Filter filter) {
+        currentFilter.setValue(filter.name);
         List<News> filteredNews;
         if (filter.name.equals("Все")) {
             filteredNews = (Objects.requireNonNull(notFilteredNews)
