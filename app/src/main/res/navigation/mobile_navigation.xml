@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/newsFragment">
+
     <fragment
         android:id="@+id/filtersFragment2"
         android:name="com.example.news_project.ui.filters.filtersList.FiltersFragment"
         android:label="fragment_filters"
         tools:layout="@layout/fragment_filters">
+
         <action
             android:id="@+id/action_filtersFragment2_to_filterRedactorFragment"
             app:destination="@id/filterRedactorFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/filterRedactorFragment"
         android:name="com.example.news_project.ui.filters.filterRedactor.FilterRedactorFragment"
@@ -36,6 +40,7 @@
         <action
             android:id="@+id/action_newsFragment_to_filtersFragment2"
             app:destination="@id/filtersFragment2" />
+
         <action
             android:id="@+id/action_newsFragment_to_filterSelectDialogFragment"
             app:destination="@id/filterSelectDialogFragment" />
@@ -45,24 +50,32 @@
             app:destination="@id/webNewsFragment" />
 
     </fragment>
+
     <dialog
         android:id="@+id/filterSelectDialogFragment"
         android:name="com.example.news_project.ui.news.selectFilter.FilterSelectDialogFragment"
         android:label="FilterSelectDialogFragment">
+
         <argument
             android:name="onSelectAction"
             app:argType="com.example.news_project.ui.news.selectFilter.arguments.OnSelectFilterAction" />
+
         <argument
             android:name="filters"
             app:argType="com.example.news_project.ui.news.selectFilter.arguments.Filters" />
+
     </dialog>
+
     <fragment
         android:id="@+id/webNewsFragment"
         android:name="com.example.news_project.ui.news.WebNewsFragment"
         android:label="fragment_web_news"
         tools:layout="@layout/fragment_web_news">
+
         <argument
             android:name="newsUrl"
             app:argType="string" />
+
     </fragment>
+
 </navigation>

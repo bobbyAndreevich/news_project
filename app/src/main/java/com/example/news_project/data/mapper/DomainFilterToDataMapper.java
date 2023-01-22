@@ -8,8 +8,7 @@ import javax.inject.Inject;
 public class DomainFilterToDataMapper implements IMapper<Filter, FilterEntity> {
 
     @Inject
-    public DomainFilterToDataMapper() {
-    }
+    public DomainFilterToDataMapper() {}
 
     @Override
     public FilterEntity Map(Filter value) {
@@ -19,5 +18,4 @@ public class DomainFilterToDataMapper implements IMapper<Filter, FilterEntity> {
         filterEntity.name = value.name;
         return filterEntity;
     }
-
 }

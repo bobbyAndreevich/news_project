@@ -3,12 +3,10 @@ package com.example.news_project.ui.news.selectFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.news_project.databinding.SelectFilterListItemBinding;
 import com.example.news_project.domain.enities.Filter;
 
@@ -73,5 +71,4 @@ public class SelectFiltersListAdapter extends ListAdapter<Filter, SelectFiltersL
             binding.textView.setText(filter.name);
         }
     }
-
 }

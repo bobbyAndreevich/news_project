@@ -1,6 +1,5 @@
 package com.example.news_project.DI.modules;
 
-
 import android.content.Context;
 
 import dagger.Module;

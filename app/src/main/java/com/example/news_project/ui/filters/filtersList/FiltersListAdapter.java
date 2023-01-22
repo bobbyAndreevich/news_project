@@ -3,15 +3,12 @@ package com.example.news_project.ui.filters.filtersList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.news_project.databinding.FilterItemBinding;
 import com.example.news_project.domain.enities.Filter;
-
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 

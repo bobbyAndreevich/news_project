@@ -9,5 +9,4 @@ public class NewsWrapper extends NewsListDelegate {
     public NewsWrapper(News news){
         value = news;
     }
-
 }

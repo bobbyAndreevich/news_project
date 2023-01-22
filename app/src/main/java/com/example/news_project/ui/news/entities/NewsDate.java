@@ -7,5 +7,4 @@ public class NewsDate extends NewsListDelegate {
     public NewsDate(String date){
         value = date;
     }
-
 }

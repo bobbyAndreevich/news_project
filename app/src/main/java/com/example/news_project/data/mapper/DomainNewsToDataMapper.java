@@ -8,8 +8,7 @@ import javax.inject.Inject;
 public class DomainNewsToDataMapper implements IMapper<News, NewsEntity> {
 
     @Inject
-    public DomainNewsToDataMapper() {
-    }
+    public DomainNewsToDataMapper() {}
 
     @Override
     public NewsEntity Map(News value) {

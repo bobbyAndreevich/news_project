@@ -6,11 +6,8 @@ import com.example.news_project.data.mapper.DomainFilterToDataMapper;
 import com.example.news_project.data.news.NewsLazyCacheManager;
 import com.example.news_project.domain.IFilterRepository;
 import com.example.news_project.domain.enities.Filter;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.rxjava3.core.Flowable;
 
 public class FilterRepositoryImpl implements IFilterRepository {

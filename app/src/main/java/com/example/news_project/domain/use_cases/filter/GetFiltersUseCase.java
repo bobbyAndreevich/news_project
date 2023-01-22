@@ -1,7 +1,5 @@
 package com.example.news_project.domain.use_cases.filter;
 
-import android.util.Log;
-
 import com.example.news_project.domain.IFilterRepository;
 import com.example.news_project.domain.enities.Filter;
 

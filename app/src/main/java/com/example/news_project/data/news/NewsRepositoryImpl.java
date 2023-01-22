@@ -1,9 +1,7 @@
 package com.example.news_project.data.news;
 
 import com.example.news_project.data.NewsDatabase;
-import com.example.news_project.data.filter.FilterEntity;
 import com.example.news_project.data.mapper.DataNewsToDomainMapper;
-import com.example.news_project.data.news.Api.NewsApiRepository;
 import com.example.news_project.domain.INewsRepository;
 import com.example.news_project.domain.enities.News;
 
@@ -31,6 +29,5 @@ public class NewsRepositoryImpl implements INewsRepository {
     public Flowable<List<News>> getNews() {
         return news.map(mapper::Map);
     }
-
 }
 

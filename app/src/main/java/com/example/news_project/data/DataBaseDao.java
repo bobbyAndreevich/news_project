@@ -43,5 +43,4 @@ public interface DataBaseDao {
 
     @Query("DELETE FROM News")
     void clearNews();
-
 }

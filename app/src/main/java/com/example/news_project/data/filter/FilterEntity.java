@@ -1,6 +1,5 @@
 package com.example.news_project.data.filter;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

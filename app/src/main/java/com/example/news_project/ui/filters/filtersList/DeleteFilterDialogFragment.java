@@ -7,19 +7,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.R;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.ui.Codes;
-
 import java.util.function.Consumer;
-
-import javax.inject.Inject;
 
 public class DeleteFilterDialogFragment extends DialogFragment {
 
     private Consumer<Filter> deleteFilterAction;
+
+    public static String TAG = "DeleteFilterDialogFragment";
 
     @NonNull
     @Override
@@ -41,6 +38,4 @@ public class DeleteFilterDialogFragment extends DialogFragment {
     public void setDeleteFilterAction(Consumer<Filter> deleteFilterAction) {
         this.deleteFilterAction = deleteFilterAction;
     }
-
-    public static String TAG = "DeleteFilterDialogFragment";
 }

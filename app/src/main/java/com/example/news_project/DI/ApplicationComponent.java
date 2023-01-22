@@ -26,5 +26,4 @@ public interface ApplicationComponent {
     void inject(FiltersRedactorViewModel viewModel);
 
     void inject(NewsListViewModel viewModel);
-
 }

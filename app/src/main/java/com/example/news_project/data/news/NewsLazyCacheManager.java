@@ -4,8 +4,6 @@ import com.example.news_project.data.NewsDatabase;
 import com.example.news_project.data.filter.FilterEntity;
 import com.example.news_project.data.news.Api.NewsApiRepository;
 import com.example.news_project.data.news.Api.NewsEntityQuery;
-import com.example.news_project.domain.enities.Filter;
-
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.core.Single;
@@ -53,5 +51,4 @@ public class NewsLazyCacheManager {
         news.filter = filter;
         database.dataBaseDao().insertNews(news);
     }
-
 }

@@ -1,18 +1,13 @@
 package com.example.news_project.ui.news.selectFilter;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.example.news_project.R;
 import com.example.news_project.databinding.FragmentFilterSelectBinding;
 import com.example.news_project.domain.enities.Filter;

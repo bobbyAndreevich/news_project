@@ -7,16 +7,12 @@ import androidx.lifecycle.LifecycleRegistry;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.domain.use_cases.filter.DeleteFilterUseCase;
 import com.example.news_project.domain.use_cases.filter.GetFiltersUseCase;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

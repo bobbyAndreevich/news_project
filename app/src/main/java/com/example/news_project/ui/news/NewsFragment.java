@@ -33,10 +33,6 @@ public class NewsFragment extends Fragment {
 
     private NavController navController;
 
-    public NewsFragment() {
-        super(R.layout.news_list_fragment);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

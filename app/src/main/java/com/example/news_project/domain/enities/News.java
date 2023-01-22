@@ -1,7 +1,5 @@
 package com.example.news_project.domain.enities;
 
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class News{

@@ -2,8 +2,6 @@ package com.example.news_project.data.mapper;
 
 import com.example.news_project.data.filter.FilterEntity;
 import com.example.news_project.domain.enities.Filter;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +10,7 @@ import javax.inject.Inject;
 public class DataFilterToDomainMapper implements IMapper<List<FilterEntity>, List<Filter>> {
 
     @Inject
-    public DataFilterToDomainMapper() {
-    }
+    public DataFilterToDomainMapper() {}
 
     private Filter singleMap(FilterEntity value) {
         Filter filter = new Filter();

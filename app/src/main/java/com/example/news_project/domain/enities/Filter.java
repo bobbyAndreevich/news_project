@@ -10,5 +10,4 @@ public class Filter implements Serializable {
     public String description;
 
     public String id = UUID.randomUUID().toString();
-
 }

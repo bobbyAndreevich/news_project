@@ -4,24 +4,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.news_project.DI.DaggerApp;
 import com.example.news_project.R;
 import com.example.news_project.databinding.FragmentFiltersBinding;
 import com.example.news_project.domain.enities.Filter;
 import com.example.news_project.ui.Codes;
-
-import javax.inject.Inject;
 
 public class FiltersFragment extends Fragment {
 

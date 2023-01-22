@@ -11,5 +11,4 @@ import com.example.news_project.data.news.NewsEntity;
 public abstract class NewsDatabase extends RoomDatabase{
 
     public abstract DataBaseDao dataBaseDao();
-
 }
